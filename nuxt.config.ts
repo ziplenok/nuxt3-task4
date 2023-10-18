@@ -13,11 +13,6 @@ export default defineNuxtConfig({
     redirect: false,
   },
 
-  runtimeConfig: {
-    SUPABASE_SERVICE_ROLE: process.env.SERVICE_ROLE,
-    SUPABASE_URL: process.env.SUPABASE_URL,
-  },
-
   css: ["~/assets/css/tailwind.css"],
 
   imports: {

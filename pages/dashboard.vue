@@ -149,6 +149,9 @@ const checkAll = computed({
   },
 });
 
+// const formatDate = useFormatTimestampz();
+const { formatTimestampz } = useFormatDate();
+
 const renderStatus = (status) => {
   if (status) return "Blocked";
   if (!status) return "Active";
@@ -266,7 +269,7 @@ const renderStatus = (status) => {
                   {{ profile.email }}
                 </td>
                 <td class="text-ellipsis overflow-hidden px-6 py-4">
-                  {{ profile.last_sign_in_at }}
+                  {{ formatTimestampz(profile.last_sign_in_at) }}
                 </td>
                 <td class="text-ellipsis overflow-hidden px-6 py-4">
                   {{ renderStatus(profile.is_blocked) }}
