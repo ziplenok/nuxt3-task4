@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .disabled-row {
+    @apply text-gray-300;
+  }
+}
