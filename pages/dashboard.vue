@@ -73,59 +73,6 @@ watch(
   }
 );
 
-// const blockDisabled = ref(true);
-// const unblockDisabled = ref(true);
-// watch(
-//   () => selecetedProfiles.value,
-//   () => {
-//     if (
-//       selecetedProfiles.value[0] &&
-//       selecetedProfiles.value[0].is_blocked === false
-//     ) {
-//       blockDisabled.value = false;
-//       unblockDisabled.value = true;
-//       return;
-//     }
-//     if (
-//       selecetedProfiles.value[0] &&
-//       selecetedProfiles.value[0].is_blocked === true
-//     ) {
-//       unblockDisabled.value = false;
-//       blockDisabled.value = true;
-//       return;
-//     }
-//     unblockDisabled.value = true;
-//     blockDisabled.value = true;
-//   }
-// );
-
-// const availableOptions = ref([]);
-// availableOptions.value = Array(selecetedUsers.value.length).fill(false);
-// const disabledOptions = computed(() => {
-//   if (selecetedUsers.value[0]) {
-//     selecetedUsers.map(function (user) {
-//       if (user.is_blocked === selecetedUsers.value[0].is_blocked) return false;
-//       else return true;
-//     });
-//   }
-//   return availableOptions.value;
-// });
-
-// console.log(disabledOptions.value);
-
-// const disableOption = (state) => {
-//   if (
-//     selecetedProfiles.value[0] &&
-//     selecetedProfiles.value[0].is_blocked !== state
-//   )
-//     return true;
-//   if (
-//     selecetedProfiles.value[0] &&
-//     selecetedProfiles.value[0].is_blocked === state
-//   )
-//     return false;
-// };
-
 async function block(profiles) {
   if (currentProfile.value.is_blocked === true) {
     router.push("/login");
@@ -191,7 +138,6 @@ const checkAll = computed({
       ? selecetedProfiles.value.length == profiles.value.length
       : false;
   },
-  // setter
   set(value) {
     var checked = [];
     if (value) {
@@ -329,65 +275,6 @@ const renderStatus = (status) => {
             </tbody>
           </table>
         </div>
-        <!-- <table
-          v-else
-          class="w-full border-separate border-spacing-y-3 text-left"
-        >
-          <thead class="text-sm">
-            <tr>
-              <th>Select</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Last login</th>
-              <th>Blocked</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm">
-            <tr
-              v-for="profile in profiles"
-              :key="profile.id"
-              :class="{ 'bg-gray-100': selecetedProfiles.includes(profile) }"
-            >
-              <td>
-                <div class="flex items-center">
-                  <input
-                    id="terms"
-                    aria-describedby="terms"
-                    type="checkbox"
-                    class="w-4 h-4 border disabled:opacity-50 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    :value="profile"
-                    v-model="selecetedProfiles"
-                    :disabled="disableOption(profile.is_blocked)"
-                  />
-                </div>
-              </td>
-              <td
-                class="text-ellipsis overflow-hidden"
-                :class="{ 'disabled-row': disableOption(profile.is_blocked) }"
-              >
-                {{ profile.first_name }} {{ profile.last_name }}
-              </td>
-              <td
-                class="text-ellipsis overflow-hidden"
-                :class="{ 'disabled-row': disableOption(profile.is_blocked) }"
-              >
-                {{ profile.email }}
-              </td>
-              <td
-                class="text-ellipsis overflow-hidden w-8"
-                :class="{ 'disabled-row': disableOption(profile.is_blocked) }"
-              >
-                {{ profile.last_sign_in_at }}
-              </td>
-              <td
-                class="text-ellipsis overflow-hidden"
-                :class="{ 'disabled-row': disableOption(profile.is_blocked) }"
-              >
-                {{ profile.is_blocked }}
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
       </div>
     </div>
   </section>
