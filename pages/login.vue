@@ -17,10 +17,12 @@ async function signIn() {
       email: email.value,
       password: password.value,
     });
-    if (error) throw error;
+    if (error) {
+      stopLoading();
+      throw error;
+    }
     await getCurrentProfile();
 
-    console.log(currentProfile.value);
     if (currentProfile.value && currentProfile.value.is_blocked === false) {
       router.push("/dashboard");
     }

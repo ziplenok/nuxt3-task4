@@ -21,6 +21,9 @@ async function getCurrentProfile() {
 
   if (error) console.log(error);
   currentProfile.value = data[0];
+  if (currentProfile.value.is_blocked === true) {
+    navigateTo("/login");
+  }
   headerLoading.value = false;
 }
 
@@ -149,7 +152,6 @@ const checkAll = computed({
   },
 });
 
-// const formatDate = useFormatTimestampz();
 const { formatTimestampz } = useFormatDate();
 
 const renderStatus = (status) => {
