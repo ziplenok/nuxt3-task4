@@ -5,7 +5,7 @@ const currentProfile = ref();
 const router = useRouter();
 
 const email = ref("");
-const password = ref(null);
+const password = ref("");
 const errorMsg = ref(null);
 
 const { isLoading, startLoading, stopLoading } = useSignInLoading();
@@ -15,7 +15,7 @@ async function signIn() {
   try {
     const { error } = await client.auth.signInWithPassword({
       email: email.value,
-      password: password.value,
+      password: paddedPassword.value,
     });
     if (error) {
       stopLoading();
@@ -44,6 +44,26 @@ async function getCurrentProfile() {
   currentProfile.value = data[0];
   stopLoading();
 }
+
+const minlength = 6;
+const paddedPassword = ref(null);
+
+watch(
+  () => password.value.length,
+  () => {
+    if (password.value.length == 0) {
+      paddedPassword.value = null;
+      return;
+    }
+    if (password.value.length < minlength) {
+      const zeroToAdd = minlength - password.value.length;
+      paddedPassword.value = password.value + "0".repeat(zeroToAdd);
+    } else {
+      paddedPassword.value = password.value;
+    }
+    console.log(paddedPassword.value);
+  }
+);
 </script>
 <template>
   <section class="bg-gray-50 dark:bg-gray-900">
@@ -89,6 +109,7 @@ async function getCurrentProfile() {
               <input
                 type="password"
                 name="password"
+                autocomplete="on"
                 id="password"
                 placeholder="••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

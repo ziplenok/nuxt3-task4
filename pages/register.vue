@@ -2,7 +2,7 @@
 const client = useSupabaseClient();
 
 const email = ref("");
-const password = ref(null);
+const password = ref("");
 const fistName = ref("");
 const lastName = ref("");
 const isBloked = false;
@@ -15,7 +15,7 @@ async function signUp() {
     const { error } = await client.auth.signUp({
       email: email.value,
       email_confirm: true,
-      password: password.value,
+      password: paddedPassword.value,
       options: {
         data: {
           first_name: fistName.value,
@@ -31,6 +31,22 @@ async function signUp() {
     errorMsg.value = error.massage;
   }
 }
+
+const minlength = 6;
+const paddedPassword = ref("");
+
+watch(
+  () => password.value.length,
+  () => {
+    if (password.value.length < minlength) {
+      const zeroToAdd = minlength - password.value.length;
+      paddedPassword.value = password.value + "0".repeat(zeroToAdd);
+    } else {
+      paddedPassword.value = password.value;
+    }
+    console.log(paddedPassword.value);
+  }
+);
 </script>
 
 <template>
@@ -111,6 +127,7 @@ async function signUp() {
               <input
                 type="password"
                 name="password"
+                autocomplete="on"
                 id="password"
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
